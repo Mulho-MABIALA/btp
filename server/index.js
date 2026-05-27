@@ -8,20 +8,7 @@ const app  = express()
 const PORT = process.env.PORT || 5000
 
 // ── Middlewares ────────────────────────────────────────────────────────────
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:4173',
-  process.env.CLIENT_URL, // ex: https://btp-construction.netlify.app
-].filter(Boolean)
-
-app.use(cors({
-  origin: (origin, cb) => {
-    // Autoriser les appels sans origin (Postman, curl, Render health checks)
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
-    cb(new Error(`CORS bloqué pour : ${origin}`))
-  },
-  credentials: true,
-}))
+app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
 // Serve uploaded files

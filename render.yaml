@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: btp-api
+    env: node
+    region: frankfurt
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false          # À saisir manuellement dans le dashboard Render
+      - key: JWT_SECRET
+        sync: false          # À saisir manuellement dans le dashboard Render
+      - key: ADMIN_PASSWORD
+        sync: false          # À saisir manuellement dans le dashboard Render
+      - key: CLIENT_URL
+        sync: false          # URL Netlify (ex: https://btp-construction.netlify.app)

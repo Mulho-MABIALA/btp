@@ -4,13 +4,18 @@ import { ArrowRight, Search, Calendar, Clock } from 'lucide-react'
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
 import SEO from '../components/ui/SEO'
-import { blogPosts } from '../data/blog'
-
-const allCategories = ['Tous', ...new Set(blogPosts.map(p => p.category))]
+import useFetch from '../hooks/useFetch'
+import { blogApi } from '../api'
 
 export default function Blog() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Tous')
+
+  const { data: allPosts } = useFetch(() => blogApi.getAll(), [])
+  const { data: apiCategories } = useFetch(() => blogApi.getCategories(), [])
+
+  const blogPosts = allPosts || []
+  const allCategories = ['Tous', ...(apiCategories || [])]
 
   const filtered = blogPosts.filter(p => {
     const m = p.title.toLowerCase().includes(search.toLowerCase()) || p.excerpt.toLowerCase().includes(search.toLowerCase())

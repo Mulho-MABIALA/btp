@@ -1,0 +1,28 @@
+# ── Dépendances ───────────────────────────────────────────────────────────────
+node_modules/
+server/node_modules/
+
+# ── Build ─────────────────────────────────────────────────────────────────────
+dist/
+build/
+
+# ── Variables d'environnement (NE JAMAIS committer) ──────────────────────────
+.env
+.env.local
+.env.production
+.env.development
+server/.env
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+
+# ── OS / éditeurs ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Uploads (fichiers binaires locaux) ────────────────────────────────────────
+server/uploads/*
+!server/uploads/.gitkeep

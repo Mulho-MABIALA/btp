@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CONSTRUCTPRO — Documentation Projet</title>
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:    #2563eb;
+    --blueD:   #1e40af;
+    --orange:  #f97316;
+    --slate:   #1e293b;
+    --slateL:  #334155;
+    --gray:    #64748b;
+    --grayL:   #94a3b8;
+    --border:  #e2e8f0;
+    --bg:      #f8fafc;
+    --white:   #ffffff;
+    --code-bg: #1e293b;
+  }
+
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+
+  html { font-size: 10.5pt; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--slate);
+    line-height: 1.65;
+    background: var(--white);
+  }
+
+  /* ── Page de couverture ── */
+  .cover {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 60%, #1e3a5f 100%);
+    color: white;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(37,99,235,.18);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: rgba(249,115,22,.1);
+  }
+  .cover-badge {
+    background: var(--orange);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-block;
+  }
+  .cover h1 {
+    font-size: 38pt;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    color: white;
+    border: none;
+    padding: 0;
+  }
+  .cover-sub {
+    font-size: 16pt;
+    color: rgba(255,255,255,.65);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cover-line {
+    width: 80px; height: 4px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin-bottom: 36px;
+  }
+  .cover-desc {
+    font-size: 11pt;
+    color: rgba(255,255,255,.8);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .cover-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-stat { text-align: center; }
+  .cover-stat .n {
+    font-size: 26pt;
+    font-weight: 900;
+    color: var(--orange);
+    display: block;
+    line-height: 1;
+  }
+  .cover-stat .l {
+    font-size: 8pt;
+    color: rgba(255,255,255,.55);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-top: 4px;
+  }
+  .cover-footer {
+    position: absolute;
+    bottom: 30px; right: 40px;
+    font-size: 8pt;
+    color: rgba(255,255,255,.35);
+  }
+  .cover-tech {
+    position: absolute;
+    bottom: 30px; left: 60px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tech-pill {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.7);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 7.5pt;
+    font-weight: 600;
+  }
+
+  /* ── Typographie ── */
+  h1 {
+    font-size: 20pt;
+    font-weight: 800;
+    color: var(--blue);
+    border-bottom: 3px solid var(--blue);
+    padding-bottom: 8px;
+    margin: 36px 0 16px;
+    page-break-after: avoid;
+  }
+  h2 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--slateL);
+    border-left: 4px solid var(--orange);
+    padding-left: 12px;
+    margin: 28px 0 12px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 20px 0 8px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--slateL);
+    margin: 16px 0 6px;
+    page-break-after: avoid;
+  }
+  h5, h6 {
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--gray);
+    margin: 12px 0 4px;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: #374151;
+  }
+
+  strong { color: var(--slate); }
+  em     { color: var(--gray); }
+
+  a { color: var(--blue); text-decoration: none; }
+
+  /* ── Listes ── */
+  ul, ol {
+    margin: 8px 0 12px 22px;
+    padding: 0;
+  }
+  li {
+    margin-bottom: 4px;
+    color: #374151;
+  }
+  li::marker { color: var(--orange); }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 18px;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+  thead {
+    background: var(--blue);
+    color: white;
+  }
+  th {
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 9pt;
+  }
+  td {
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--border);
+    color: #374151;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f1f5f9; }
+  tr:hover td { background: #e0f2fe; }
+
+  /* ── Code ── */
+  code {
+    background: #f1f5f9;
+    color: var(--blue);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9pt;
+  }
+  pre {
+    background: var(--code-bg);
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 12px 0 16px;
+    overflow-x: auto;
+    font-size: 8.5pt;
+    line-height: 1.6;
+    page-break-inside: avoid;
+  }
+  pre code {
+    background: transparent;
+    color: #e2e8f0;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* ── Blockquote ── */
+  blockquote {
+    border-left: 4px solid var(--orange);
+    background: #fff7ed;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    color: #92400e;
+    font-style: italic;
+    page-break-inside: avoid;
+  }
+
+  /* ── Règle horizontale ── */
+  hr {
+    border: none;
+    border-top: 2px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── Numérotation des pages ── */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h1, h2, h3, h4 { page-break-after: avoid; }
+    pre, table, blockquote { page-break-inside: avoid; }
+    .no-break { page-break-inside: avoid; }
+  }
+
+  /* ── Contenu principal ── */
+  .content {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* ── En-tête de section (numérotée) ── */
+  .section-header {
+    background: linear-gradient(90deg, #eff6ff, #fff);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 20px 0 14px;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE DE COUVERTURE ══════════════════════════════════════════════════ -->
+<div class="cover">
+  <span class="cover-badge">Documentation Projet</span>
+  <h1>CONSTRUCTPRO</h1>
+  <p class="cover-sub">Plateforme de gestion BTP — Full Stack</p>
+  <div class="cover-line"></div>
+  <p class="cover-desc">
+    Solution complète de gestion pour les entreprises du BTP : site vitrine public,
+    espace employé, kiosque de pointage et panneau d'administration avec 32 modules métier.
+    100&nbsp;% responsive, mode sombre, génération PDF, export CSV et envoi email intégrés.
+  </p>
+  <div class="cover-stats">
+    <div class="cover-stat"><span class="n">38</span><span class="l">Pages Admin</span></div>
+    <div class="cover-stat"><span class="n">12</span><span class="l">Pages Client</span></div>
+    <div class="cover-stat"><span class="n">30+</span><span class="l">Collections MongoDB</span></div>
+    <div class="cover-stat"><span class="n">25+</span><span class="l">Routes API REST</span></div>
+    <div class="cover-stat"><span class="n">100%</span><span class="l">Responsive</span></div>
+  </div>
+  <div class="cover-tech">
+    <span class="tech-pill">React 18</span>
+    <span class="tech-pill">Vite 5</span>
+    <span class="tech-pill">Tailwind CSS</span>
+    <span class="tech-pill">Node.js</span>
+    <span class="tech-pill">Express.js</span>
+    <span class="tech-pill">MongoDB Atlas</span>
+    <span class="tech-pill">JWT</span>
+    <span class="tech-pill">Framer Motion</span>
+    <span class="tech-pill">Recharts</span>
+    <span class="tech-pill">jsPDF</span>
+  </div>
+  <div class="cover-footer">Généré le 26 mai 2026</div>
+</div>
+
+<!-- ══ CONTENU ═════════════════════════════════════════════════════════════ -->
+<div class="content">
+<h1>CONSTRUCTPRO — Documentation Complète du Projet</h1>
+<blockquote>Plateforme de gestion BTP full-stack (React + Node.js + MongoDB)</blockquote>
+<blockquote>Document destiné au montage vidéo de présentation</blockquote>
+
+<hr>
+
+<h2>TABLE DES MATIÈRES</h2>
+
+<ol>
+<li><a href="#1-vue-densemble">Vue d'ensemble du projet</a></li>
+<li><a href="#2-architecture-technique">Architecture technique</a></li>
+<li><a href="#3-côté-client--site-vitrine-public">CÔTÉ CLIENT — Site vitrine public</a></li>
+</ol>
+<ul>
+<li>3.1 Page d'accueil (Home)</li>
+<li>3.2 Services</li>
+<li>3.3 Projets (Portfolio)</li>
+<li>3.4 Équipe</li>
+<li>3.5 Blog</li>
+<li>3.6 Témoignages</li>
+<li>3.7 Contact</li>
+<li>3.8 Demande de devis</li>
+<li>3.9 Espace Employé</li>
+<li>3.10 Kiosque de pointage</li>
+</ul>
+<ol>
+<li><a href="#4-côté-admin--panneau-de-gestion">CÔTÉ ADMIN — Panneau de gestion</a></li>
+</ol>
+<ul>
+<li>4.01 Connexion Admin</li>
+<li>4.02 Tableau de bord (Dashboard)</li>
+<li>4.03 Projets</li>
+<li>4.04 Ressources Humaines (RH)</li>
+<li>4.05 Finance — Factures & Dépenses</li>
+<li>4.06 Clients</li>
+<li>4.07 Fournisseurs</li>
+<li>4.08 Bons de commande</li>
+<li>4.09 Avoirs (Notes de crédit)</li>
+<li>4.10 Budget chantiers</li>
+<li>4.11 TVA</li>
+<li>4.12 Paie (Payroll)</li>
+<li>4.13 Présences (Pointage)</li>
+<li>4.14 Congés</li>
+<li>4.15 Plannings horaires</li>
+<li>4.16 Historique kiosque</li>
+<li>4.17 Tâches</li>
+<li>4.18 Ordres de travail</li>
+<li>4.19 Équipements & Engins</li>
+<li>4.20 Inventaire / Matériaux</li>
+<li>4.21 Sous-traitants</li>
+<li>4.22 HSE — Hygiène Sécurité Environnement</li>
+<li>4.23 Documents RH</li>
+<li>4.24 Rapports de chantier</li>
+<li>4.25 Rappels & Échéances</li>
+<li>4.26 Journal d'activité</li>
+<li>4.27 Calendrier</li>
+<li>4.28 Rapports & Analyses</li>
+<li>4.29 Gestion des utilisateurs admin</li>
+<li>4.30 Paramètres de l'entreprise</li>
+<li>4.31 Contenu du site (Blog, Services, Équipe, Témoignages)</li>
+<li>4.32 Contacts entrants & Devis reçus</li>
+</ul>
+<ol>
+<li><a href="#5-fonctionnalités-transversales">Fonctionnalités transversales</a></li>
+<li><a href="#6-script-de-tournage-vidéo">Script de tournage vidéo</a></li>
+</ol>
+
+<hr>
+
+<h2>1. VUE D'ENSEMBLE</h2>
+
+<p><strong>CONSTRUCTPRO</strong> est une application web complète conçue pour une entreprise du secteur BTP (Bâtiment et Travaux Publics). Elle regroupe deux espaces distincts :</p>
+
+<table>
+<thead><tr><th>Espace</th><th>Public cible</th><th>Accès</th></tr></thead><tbody>
+<tr><td><strong>Site vitrine</strong></td><td>Clients potentiels, grand public</td><td>Libre</td></tr>
+<tr><td><strong>Espace employé</strong></td><td>Salariés de l'entreprise</td><td>Recherche par nom ou QR code</td></tr>
+<tr><td><strong>Kiosque de pointage</strong></td><td>Salariés sur site (tablette/écran)</td><td>Scan QR code</td></tr>
+<tr><td><strong>Panneau d'administration</strong></td><td>Direction, RH, Comptabilité</td><td>Login JWT sécurisé</td></tr>
+</tbody></table>
+
+<p><strong>Chiffres du projet :</strong></p>
+<ul>
+<li>38 pages admin</li>
+<li>12 pages côté client</li>
+<li>25+ routes API REST</li>
+<li>30+ modèles de données MongoDB</li>
+<li>100% responsive (mobile, tablette, desktop)</li>
+<li>Mode sombre/clair (dark mode)</li>
+</ul>
+
+<hr>
+
+<h2>2. ARCHITECTURE TECHNIQUE</h2>
+
+<pre><code class="lang-">
+┌─────────────────────────────────────────────────────────────┐
+│                    FRONTEND (Netlify)                        │
+│  React 18 + Vite 5 + Tailwind CSS v3 + Framer Motion        │
+│  ┌──────────────────┐  ┌──────────────────────────────────┐ │
+│  │  Site public     │  │  Admin Panel                      │ │
+│  │  /               │  │  /admin/*                         │ │
+│  └──────────────────┘  └──────────────────────────────────┘ │
+└────────────────────────┬────────────────────────────────────┘
+                         │ HTTPS + JWT
+┌────────────────────────▼────────────────────────────────────┐
+│                    BACKEND (Render)                          │
+│  Node.js + Express.js                                        │
+│  25+ routes REST (/api/*)                                    │
+│  Authentification JWT (bcryptjs)                             │
+│  Upload fichiers (Multer)                                    │
+└────────────────────────┬────────────────────────────────────┘
+                         │ Mongoose ODM
+┌────────────────────────▼────────────────────────────────────┐
+│                 MongoDB Atlas (Cloud)                         │
+│  30+ collections : employees, invoices, projects,            │
+│  clients, attendance, leaves, payroll, equipment…            │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+
+<hr>
+
+<h2>3. CÔTÉ CLIENT — SITE VITRINE PUBLIC</h2>
+
+<h3>3.1 Page d'accueil (<code>/</code>)</h3>
+
+<p><strong>Description :</strong> Page principale du site vitrine. C'est la première impression de l'entreprise.</p>
+
+<p><strong>Sections visibles :</strong></p>
+<ul>
+<li><strong>Hero Slider</strong> : Diaporama automatique de 4 slides avec photos plein écran de chantiers, animations de texte en cascade, statistiques flottantes (350+ projets, 20 ans, 280+ experts, 98% satisfaction). Contrôles précédent/suivant et pagination par points.</li>
+<li><strong>Bande de confiance</strong> : Logos ou badges de partenaires/certifications défilant en continu.</li>
+<li><strong>Services en vedette</strong> : 6 cartes de services avec icône colorée, titre et description courte. Hover animé.</li>
+<li><strong>À propos rapide</strong> : Bloc texte avec chiffres animés (compteurs qui s'incrémentent au scroll), liste de points forts, photo illustrative.</li>
+<li><strong>Projets récents</strong> : Grille de 3 projets phares avec photo, catégorie, titre et lien vers le portfolio.</li>
+<li><strong>Processus de travail</strong> : Timeline visuelle en 4 étapes (Consultation → Conception → Réalisation → Livraison).</li>
+<li><strong>Témoignages clients</strong> : Carrousel de témoignages avec photo, note étoiles, citation.</li>
+<li><strong>Blog / Actualités</strong> : 3 derniers articles avec vignette, catégorie, date et extrait.</li>
+<li><strong>Bandeau CTA</strong> : Appel à l'action avec bouton "Demander un devis" et "Nous contacter".</li>
+</ul>
+
+<p><strong>Interactions notables :</strong></p>
+<ul>
+<li>Animations au scroll via <code>react-intersection-observer</code></li>
+<li>Compteurs animés via <code>react-countup</code></li>
+<li>Slider via <code>Swiper.js</code> avec effet fade</li>
+</ul>
+
+<hr>
+
+<h3>3.2 Services (<code>/services</code>)</h3>
+
+<p><strong>Description :</strong> Catalogue complet des prestations de l'entreprise.</p>
+
+<p><strong>Contenu :</strong></p>
+<ul>
+<li>En-tête avec titre animé et sous-titre</li>
+<li>Grille de cartes services avec : icône SVG colorée, nom du service, description détaillée, liste des prestations incluses</li>
+<li>Services disponibles : Construction résidentielle, Génie civil, Architecture & Design, Rénovation, Électricité & Plomberie, Gestion de chantier, etc.</li>
+<li>Chaque carte a un hover avec élévation et couleur d'accentuation</li>
+</ul>
+
+<hr>
+
+<h3>3.3 Projets — Portfolio (<code>/projects</code>)</h3>
+
+<p><strong>Description :</strong> Portfolio complet des réalisations de l'entreprise.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Filtres par catégorie</strong> : Boutons de filtrage (Tous, Résidentiel, Commercial, Industriel, Infrastructure…) — animation fluide au changement</li>
+<li><strong>Grille de projets</strong> : Cartes avec photo principale, badge de catégorie, titre, localisation, année</li>
+<li><strong>Chargement depuis l'API</strong> : Les projets sont récupérés depuis la base de données (gérés par l'admin)</li>
+<li><strong>Responsive</strong> : 1 colonne mobile → 2 tablette → 3 desktop</li>
+</ul>
+
+<hr>
+
+<h3>3.4 Équipe (<code>/team</code>)</h3>
+
+<p><strong>Description :</strong> Présentation de l'équipe dirigeante et des experts.</p>
+
+<p><strong>Contenu :</strong></p>
+<ul>
+<li>Cartes membre avec photo, nom, poste, département</li>
+<li>Liens réseaux sociaux (LinkedIn, email)</li>
+<li>Données dynamiques depuis la base de données</li>
+</ul>
+
+<hr>
+
+<h3>3.5 Blog (<code>/blog</code>)</h3>
+
+<p><strong>Description :</strong> Section actualités et articles de fond sur le secteur BTP.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Liste d'articles avec vignette, catégorie, auteur, date et extrait</li>
+<li>Filtrage par catégorie</li>
+<li>Données gérées depuis le panneau admin</li>
+</ul>
+
+<hr>
+
+<h3>3.6 Témoignages (<code>/testimonials</code>)</h3>
+
+<p><strong>Description :</strong> Page dédiée aux avis et témoignages clients.</p>
+
+<p><strong>Contenu :</strong></p>
+<ul>
+<li>Grille de témoignages avec photo, nom, entreprise, note (étoiles), commentaire</li>
+<li>Données gérées depuis l'admin</li>
+</ul>
+
+<hr>
+
+<h3>3.7 Contact (<code>/contact</code>)</h3>
+
+<p><strong>Description :</strong> Page de prise de contact.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Formulaire</strong> : Nom, email, téléphone, sujet, message</li>
+<li><strong>Validation</strong> : Champs obligatoires, format email</li>
+<li><strong>Envoi API</strong> : Soumis à <code>/api/contact</code>, visible dans l'admin sous "Messages"</li>
+<li><strong>Informations de contact</strong> : Adresse, téléphone, email, horaires</li>
+<li><strong>Carte / Map</strong> : Intégration carte pour localisation du siège</li>
+</ul>
+
+<hr>
+
+<h3>3.8 Demande de devis (<code>/quote</code>)</h3>
+
+<p><strong>Description :</strong> Formulaire de demande de devis en ligne.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Formulaire enrichi</strong> : Nom, email, téléphone, type de projet, description, budget estimé, délai souhaité, localisation</li>
+<li><strong>Envoi API</strong> : Soumis à <code>/api/quotes</code>, visible dans l'admin sous "Devis reçus"</li>
+<li>Confirmation visuelle après envoi</li>
+</ul>
+
+<hr>
+
+<h3>3.9 Espace Employé (<code>/employee</code>)</h3>
+
+<p><strong>Description :</strong> Portail libre-service pour les employés de l'entreprise. Permet à chaque salarié de consulter ses informations sans passer par l'admin.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Recherche</strong> : Par nom ou prénom — liste déroulante des employés correspondants</li>
+<li><strong>Identification par QR code</strong> : Scan de la caméra pour s'identifier instantanément</li>
+<li><strong>Tableau de bord personnel :</strong></li>
+<li>Carte identité (nom, poste, département, ancienneté)</li>
+<li>Statut du jour (Présent / Absent / En congé / Retard)</li>
+<li>Heures pointées ce mois</li>
+<li>Solde de congés restants</li>
+<li><strong>Onglets disponibles :</strong></li>
+<li><strong>Présences</strong> : Historique des pointages (entrée, sortie, heures travaillées, statut)</li>
+<li><strong>Planning</strong> : Horaires de travail programmés par semaine</li>
+<li><strong>Congés</strong> : Demandes passées et statut (En attente / Approuvé / Refusé)</li>
+<li><strong>Bulletins de paie</strong> : Liste des fiches de paie mensuelles (montant net, statut)</li>
+</ul>
+
+<p><strong>Couleurs par département :</strong> Chaque département a son propre dégradé de couleur (Chantier = bleu, RH = rose, Direction = ardoise, etc.)</p>
+
+<hr>
+
+<h3>3.10 Kiosque de Pointage (<code>/kiosk</code>)</h3>
+
+<p><strong>Description :</strong> Application de pointage conçue pour être affichée sur une tablette ou un grand écran à l'entrée du chantier ou des bureaux.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Horloge en direct</strong> : Affichage heure/date en temps réel, grand format</li>
+<li><strong>Scan QR code</strong> : Activation de la caméra, détection automatique du QR code employé</li>
+<li><strong>Résultat instantané :</strong></li>
+<li>Carte employé avec photo, nom, poste, département (couleur du dégradé)</li>
+<li>Heure de pointage enregistrée</li>
+<li>Type d'action : Arrivée ✅ ou Départ 🚪</li>
+<li>Message de bienvenue ou au revoir</li>
+<li><strong>Mode automatique</strong> : Retour à l'écran d'accueil après 5 secondes</li>
+<li><strong>États gérés :</strong> Inactif → Scan en cours → Chargement → Succès / Erreur</li>
+</ul>
+
+<hr>
+
+<h2>4. CÔTÉ ADMIN — PANNEAU DE GESTION</h2>
+
+<blockquote>Accès : <code>/admin/login</code></blockquote>
+<blockquote>Credentials : <code>admin@constructpro.com</code> / <code>admin123</code></blockquote>
+
+<h3>4.01 Connexion Admin (<code>/admin/login</code>)</h3>
+
+<p><strong>Description :</strong> Page de connexion sécurisée avec JWT.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Formulaire email + mot de passe</li>
+<li>Token JWT stocké en localStorage</li>
+<li>Redirection automatique si déjà connecté</li>
+<li>Gestion des erreurs (mauvais identifiants)</li>
+<li>Design : fond dégradé sombre avec logo centré</li>
+</ul>
+
+<hr>
+
+<h3>4.02 Tableau de Bord (<code>/admin</code>) — DASHBOARD</h3>
+
+<p><strong>Description :</strong> Page d'accueil de l'admin. Vue synthétique de toute l'activité de l'entreprise. C'est la page la plus riche du projet.</p>
+
+<p><strong>KPIs en haut de page (4 cartes) :</strong></p>
+<ul>
+<li>Chiffre d'affaires du mois (avec évolution % vs mois précédent)</li>
+<li>Projets actifs (avec progression visuelle)</li>
+<li>Tâches en cours</li>
+<li>Alertes diverses (impayés, stock bas, maintenance due)</li>
+</ul>
+
+<p><strong>Système de widgets personnalisables (22 widgets) :</strong></p>
+<p>L'administrateur peut activer/désactiver chaque widget et les réorganiser par glisser-déposer (drag & drop).</p>
+
+<table>
+<thead><tr><th>Widget</th><th>Contenu</th></tr></thead><tbody>
+<tr><td>Projets actifs</td><td>Barre de progression par projet</td></tr>
+<tr><td>Dernières factures</td><td>Tableau des 5 dernières factures avec statut</td></tr>
+<tr><td>Tâches prioritaires</td><td>Tâches urgentes à traiter</td></tr>
+<tr><td>Top clients CA</td><td>Classement clients par chiffre d'affaires</td></tr>
+<tr><td>Vieillissement créances</td><td>Impayés par tranche 0-30 / 30-60 / 60-90 / 90+ jours</td></tr>
+<tr><td>Flux de trésorerie</td><td>Créances vs dettes fournisseurs</td></tr>
+<tr><td>Budget chantiers</td><td>Consommation budgétaire par projet (barre)</td></tr>
+<tr><td>Rapports de chantier</td><td>Derniers rapports journaliers</td></tr>
+<tr><td>RH du jour</td><td>Présents / Absents / En congé aujourd'hui</td></tr>
+<tr><td>Heures semaine</td><td>Total heures pointées cette semaine</td></tr>
+<tr><td>Rappels & Échéances</td><td>Rappels urgents dans les 7 prochains jours</td></tr>
+<tr><td>Maintenance équipements</td><td>Engins dont la maintenance est due</td></tr>
+<tr><td>HSE / Sécurité</td><td>Incidents ouverts et alertes critiques</td></tr>
+<tr><td>Paiements fournisseurs</td><td>Échéances à 30 jours</td></tr>
+<tr><td>Soldes sous-traitants</td><td>Montants restants à payer par sous-traitant</td></tr>
+<tr><td>Bons de commande</td><td>Commandes fournisseurs en attente</td></tr>
+<tr><td>Activité récente</td><td>Journal des 5 dernières actions</td></tr>
+<tr><td>Alertes stock</td><td>Matériaux sous le seuil minimum</td></tr>
+<tr><td>Revenus & Dépenses</td><td>Graphique en aires des 6 derniers mois</td></tr>
+<tr><td>Statut des tâches</td><td>Donut chart par statut (À faire / En cours / Fait)</td></tr>
+<tr><td>Derniers messages</td><td>Contacts entrants non lus</td></tr>
+<tr><td>Derniers devis</td><td>Devis reçus récemment</td></tr>
+</tbody></table>
+
+<p><strong>Graphiques :</strong></p>
+<ul>
+<li>Graphique en aires (Recharts) — revenus vs dépenses sur 6 mois</li>
+<li>Diagramme en donut (PieChart) — répartition des statuts de tâches</li>
+</ul>
+
+<p><strong>Filtres période :</strong> Semaine / Mois / Trimestre / Année</p>
+
+<hr>
+
+<h3>4.03 Projets (<code>/admin/projects</code>)</h3>
+
+<p><strong>Description :</strong> Gestion du portfolio de projets de l'entreprise.</p>
+
+<p><strong>Liste des projets :</strong></p>
+<ul>
+<li>Cartes avec photo de couverture, nom, catégorie, statut, client associé, budget</li>
+<li>Filtres par statut (En cours / Terminé / En attente / Annulé)</li>
+<li>Recherche par nom</li>
+</ul>
+
+<p><strong>Formulaire de création/édition :</strong></p>
+<ul>
+<li>Nom du projet, description, catégorie, statut</li>
+<li>Client associé (sélecteur)</li>
+<li>Dates (début, fin prévue)</li>
+<li>Budget alloué, coût actuel</li>
+<li>Avancement (%) — curseur</li>
+<li>Localisation, chef de projet</li>
+<li>Upload photo de couverture</li>
+<li>Galerie photos (upload multiple + suppression individuelle)</li>
+</ul>
+
+<p><strong>Page détail projet</strong> (<code>/admin/projects/:id</code>) :</p>
+<ul>
+<li>Toutes les infos du projet</li>
+<li>Tâches associées</li>
+<li>Rapports de chantier liés</li>
+<li>Équipe affectée</li>
+</ul>
+
+<hr>
+
+<h3>4.04 Ressources Humaines — RH (<code>/admin/hr</code>)</h3>
+
+<p><strong>Description :</strong> Module complet de gestion des employés. Page la plus riche côté RH.</p>
+
+<p><strong>Liste des employés :</strong></p>
+<ul>
+<li>Cartes avec photo, nom, poste, département, statut (Actif/Inactif)</li>
+<li>Codes couleurs par département</li>
+<li>Filtres par département, statut</li>
+<li>Recherche par nom</li>
+</ul>
+
+<p><strong>Formulaire employé :</strong></p>
+<ul>
+<li>Informations personnelles : Nom, prénom, CIN, date de naissance, adresse, téléphone, email</li>
+<li>Informations professionnelles : Poste, département, date d'embauche, type de contrat (CDI/CDD/Intérim/Freelance)</li>
+<li>Rémunération : Salaire de base, primes, avances sur salaire</li>
+<li>Upload photo de profil</li>
+</ul>
+
+<p><strong>Fiche employé détaillée</strong> (<code>/admin/employees/:id</code>) — vue complète avec onglets :</p>
+<ul>
+<li><strong>Profil</strong> : Toutes les données personnelles et professionnelles + ancienneté calculée</li>
+<li><strong>QR Code</strong> : QR code personnel pour le pointage au kiosque (téléchargeable)</li>
+<li><strong>Présences</strong> : Tableau de l'historique des pointages du mois</li>
+<li><strong>Congés</strong> : Solde et historique des demandes de congé</li>
+<li><strong>Paie</strong> : Bulletins de paie archivés</li>
+<li><strong>Tâches</strong> : Tâches assignées à cet employé</li>
+<li><strong>Documents</strong> : Documents RH (contrat, diplômes, certificats)</li>
+<li><strong>Formations</strong> : Historique des formations et habilitations avec dates d'expiration</li>
+<li><strong>Avances</strong> : Gestion des avances sur salaire avec statut (Accordé/Refusé/En attente)</li>
+</ul>
+
+<hr>
+
+<h3>4.05 Finance — Factures & Dépenses (<code>/admin/finance</code>)</h3>
+
+<p><strong>Description :</strong> Module financier central. Gestion des factures clients et des dépenses.</p>
+
+<p><strong>Onglet Factures :</strong></p>
+<ul>
+<li><strong>KPIs</strong> : Total facturé / Encaissé / En attente / En retard (avec montants)</li>
+<li><strong>Tableau</strong> : Numéro, client, date, échéance, montant HT, TVA, TTC, statut</li>
+<li><strong>Statuts</strong> : Brouillon / Envoyée / Payée / En retard / Paiement partiel</li>
+<li><strong>Filtres</strong> : Par statut, par période, par client, recherche texte</li>
+<li><strong>Export CSV</strong> : Téléchargement de la liste filtrée</li>
+</ul>
+
+<p><strong>Création/édition de facture :</strong></p>
+<ul>
+<li>Sélection du client (chargé depuis la base)</li>
+<li>Type : Facture standard / Situation / Acompte / Définitive</li>
+<li>Numéro auto-généré (ex: FAC-2026-0042)</li>
+<li>Date de facture et date d'échéance</li>
+<li>Conditions de paiement (Comptant / 15j / 30j / 45j / 60j / 90j)</li>
+<li><strong>Lignes de facturation</strong> : Description, quantité, unité, prix unitaire HT → total HT auto-calculé</li>
+<li>Taux de TVA (applicable depuis les paramètres)</li>
+<li>Total HT / TVA / TTC calculés automatiquement</li>
+<li>Notes et conditions générales</li>
+<li><strong>Génération PDF</strong> : Bouton "Télécharger PDF" — génère un PDF formaté avec logo, coordonnées, tableau des lignes, totaux, mentions légales</li>
+<li><strong>Envoi par email</strong> : Modal pour envoyer la facture au client par email (NodeMailer)</li>
+<li><strong>Enregistrement de paiement</strong> : Ajouter des paiements partiels ou complets avec mode (Espèces/Virement/Chèque/Carte) et date</li>
+<li><strong>Relance en masse</strong> : Bouton pour envoyer des rappels email à tous les clients en retard</li>
+</ul>
+
+<p><strong>Onglet Dépenses :</strong></p>
+<ul>
+<li>Tableau des dépenses avec catégorie, description, montant, date, projet lié</li>
+<li>Catégories : Matériaux / Main d'œuvre / Équipements / Transport / Sous-traitance / Bureau / Autre</li>
+<li>Graphique en barres par catégorie</li>
+<li>Formulaire d'ajout rapide</li>
+</ul>
+
+<hr>
+
+<h3>4.06 Clients (<code>/admin/clients</code>)</h3>
+
+<p><strong>Description :</strong> CRM simplifié pour la gestion des clients de l'entreprise.</p>
+
+<p><strong>Liste clients :</strong></p>
+<ul>
+<li>Tableau avec nom, type (Particulier/Entreprise/Promoteur), téléphone, email, ville, CA total</li>
+<li>Recherche et filtres</li>
+</ul>
+
+<p><strong>Formulaire client :</strong></p>
+<ul>
+<li>Raison sociale / nom, type, numéro de client</li>
+<li>Coordonnées : adresse complète, téléphone, email, site web</li>
+<li>Contact référent (pour les entreprises)</li>
+<li>Notes internes</li>
+</ul>
+
+<p><strong>Fiche client détaillée</strong> (<code>/admin/clients/:id</code>) :</p>
+<ul>
+<li>Toutes les infos du client</li>
+<li>Liste de toutes ses factures avec statuts</li>
+<li>Historique des projets</li>
+<li>Total CA généré</li>
+<li>Bouton envoi email direct depuis la fiche</li>
+</ul>
+
+<hr>
+
+<h3>4.07 Fournisseurs (<code>/admin/suppliers</code>)</h3>
+
+<p><strong>Description :</strong> Répertoire des fournisseurs de l'entreprise.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau : Nom, catégorie, contact, téléphone, email, ville</li>
+<li>Catégories : Matériaux / Équipements / Services / Sous-traitants / Autre</li>
+<li>Formulaire création/édition avec IBAN, conditions de paiement habituelles</li>
+<li>Notes internes par fournisseur</li>
+</ul>
+
+<hr>
+
+<h3>4.08 Bons de Commande (<code>/admin/purchase-orders</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des commandes passées aux fournisseurs.</p>
+
+<p><strong>Tableau des BdC :</strong></p>
+<ul>
+<li>Numéro (BC-2026-XXXX), fournisseur, date, montant, statut</li>
+<li><strong>Statuts</strong> : Brouillon / Envoyé / Confirmé / Reçu partiellement / Reçu / Annulé</li>
+<li>Filtres par statut et fournisseur</li>
+</ul>
+
+<p><strong>Formulaire BdC :</strong></p>
+<ul>
+<li>Sélection du fournisseur, projet lié</li>
+<li>Lignes de commande : article, quantité, unité, prix unitaire</li>
+<li>Total HT/TVA/TTC calculé</li>
+<li>Conditions de livraison et de paiement</li>
+<li><strong>Envoi par email</strong> au fournisseur</li>
+<li><strong>Génération PDF</strong></li>
+<li>Changement de statut en un clic</li>
+</ul>
+
+<hr>
+
+<h3>4.09 Avoirs — Notes de Crédit (<code>/admin/credit-notes</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des avoirs (annulations partielles ou totales de factures).</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Liste des avoirs avec numéro (AV-2026-XXXX), facture liée, client, montant, statut</li>
+<li>Statuts : Brouillon / Envoyé / Appliqué</li>
+<li>Création d'avoir avec lignes détaillées (identique aux factures)</li>
+<li>Génération PDF et envoi email</li>
+<li>Lien automatique avec la facture d'origine</li>
+</ul>
+
+<hr>
+
+<h3>4.10 Budget Chantiers (<code>/admin/budget</code>)</h3>
+
+<p><strong>Description :</strong> Suivi budgétaire par projet.</p>
+
+<p><strong>Vue globale :</strong></p>
+<ul>
+<li>Tableau de tous les projets avec : budget alloué, dépenses réelles, écart, % consommé</li>
+<li>Barre de progression colorée (vert → orange → rouge selon dépassement)</li>
+<li>KPIs globaux : Budget total, Dépensé total, Solde disponible</li>
+</ul>
+
+<p><strong>Vue détaillée par projet :</strong></p>
+<ul>
+<li>Répartition du budget par catégorie de dépense</li>
+<li>Graphique en barres Prévu vs Réel</li>
+<li>Historique des dépenses imputées au projet</li>
+<li>Alertes de dépassement budgétaire</li>
+</ul>
+
+<hr>
+
+<h3>4.11 TVA (<code>/admin/tva</code>)</h3>
+
+<p><strong>Description :</strong> Récapitulatif de la TVA collectée et déductible.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Sélection de l'année fiscale</li>
+<li>Tableau mensuel : TVA collectée (sur factures) / TVA déductible (sur achats) / TVA nette à payer</li>
+<li>Totaux annuels</li>
+<li>Graphique d'évolution mensuelle</li>
+</ul>
+
+<hr>
+
+<h3>4.12 Paie — Payroll (<code>/admin/payroll</code>)</h3>
+
+<p><strong>Description :</strong> Génération et gestion des fiches de paie mensuelles.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Génération automatique</strong> : Bouton "Générer la paie de [mois]" → crée les bulletins pour tous les employés actifs</li>
+<li>Tableau : Employé, mois, salaire base, primes, avances déduites, cotisations, <strong>net à payer</strong>, statut</li>
+<li><strong>Statuts</strong> : En attente / Validé / Payé</li>
+<li>Changement de statut en masse ou individuel</li>
+<li><strong>Envoi bulletin par email</strong> à chaque employé</li>
+<li>Filtres par mois et statut</li>
+<li>Export CSV</li>
+</ul>
+
+<hr>
+
+<h3>4.13 Présences — Pointage (<code>/admin/attendance</code>)</h3>
+
+<p><strong>Description :</strong> Module de gestion des présences des employés.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li><strong>Vue journalière</strong> : Tableau de tous les employés avec statut du jour (Présent / Absent / Retard / Mi-temps / Congé), heure d'arrivée, heure de départ, heures travaillées</li>
+<li><strong>Filtres</strong> : Par date, par département, par statut</li>
+<li><strong>Saisie manuelle</strong> : L'admin peut saisir ou corriger un pointage</li>
+<li><strong>Employés manquants</strong> : Onglet dédié aux absents non justifiés du jour</li>
+<li>Résumé : Nombre de présents, absents, retards, en congé</li>
+</ul>
+
+<hr>
+
+<h3>4.14 Congés (<code>/admin/leaves</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des demandes de congé.</p>
+
+<p><strong>KPIs (3 cartes) :</strong></p>
+<ul>
+<li>Demandes en attente</li>
+<li>Congés approuvés ce mois</li>
+<li>Employés absents aujourd'hui</li>
+</ul>
+
+<p><strong>Tableau des demandes :</strong></p>
+<ul>
+<li>Employé, type de congé (Annuel / Maladie / Maternité / Sans solde / Autre), dates, durée, statut</li>
+<li><strong>Statuts</strong> : En attente / Approuvé / Refusé</li>
+<li><strong>Actions</strong> : Approuver ✅ / Refuser ❌ en un clic</li>
+</ul>
+
+<p><strong>Soldes de congé</strong> : Consultation du solde de jours restants par employé et par année</p>
+
+<hr>
+
+<h3>4.15 Plannings Horaires (<code>/admin/work-schedules</code>)</h3>
+
+<p><strong>Description :</strong> Programmation des horaires de travail par employé.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Vue semaine : Grille employés × jours avec créneaux horaires</li>
+<li>Saisie des horaires : Heure début, heure fin, pause (en minutes), jour(s)</li>
+<li><strong>Copier la semaine</strong> : Dupliquer un planning d'une semaine sur une autre</li>
+<li>Navigation semaine par semaine</li>
+<li>Filtres par département</li>
+</ul>
+
+<hr>
+
+<h3>4.16 Historique Kiosque (<code>/admin/kiosk-history</code>)</h3>
+
+<p><strong>Description :</strong> Journal de tous les pointages effectués via le kiosque QR code.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau : Employé, action (Arrivée/Départ), heure, date, département</li>
+<li>Filtres par date et par employé</li>
+<li>Résumé du jour : Total pointages, arrivées, départs</li>
+</ul>
+
+<hr>
+
+<h3>4.17 Tâches (<code>/admin/tasks</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des tâches de travail.</p>
+
+<p><strong>Vue Kanban / Liste :</strong></p>
+<ul>
+<li>Colonnes : À faire / En cours / En révision / Terminé</li>
+<li>Drag & Drop entre colonnes</li>
+<li>Cartes tâches avec : titre, priorité (Urgente/Haute/Normale/Basse), assigné, échéance, projet lié</li>
+</ul>
+
+<p><strong>Formulaire tâche :</strong></p>
+<ul>
+<li>Titre, description</li>
+<li>Priorité et statut</li>
+<li>Assignation à un ou plusieurs employés</li>
+<li>Projet lié</li>
+<li>Date d'échéance</li>
+<li>Pièces jointes</li>
+</ul>
+
+<hr>
+
+<h3>4.18 Ordres de Travail (<code>/admin/work-orders</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des ordres de travail de maintenance et d'intervention.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau : Numéro, titre, type, priorité, assigné, statut, date d'échéance</li>
+<li><strong>Types</strong> : Maintenance préventive / Corrective / Installation / Inspection</li>
+<li><strong>Statuts</strong> : Ouvert / En cours / Terminé / Annulé</li>
+<li>Formulaire avec description détaillée, équipement concerné, technicien assigné</li>
+</ul>
+
+<hr>
+
+<h3>4.19 Équipements & Engins (<code>/admin/equipment</code>)</h3>
+
+<p><strong>Description :</strong> Gestion du parc matériel et des engins de chantier.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Cartes équipements avec photo, nom, type, numéro de série, statut</li>
+<li><strong>Statuts</strong> : Disponible / En service / En maintenance / Hors service</li>
+<li><strong>Fiche équipement :</strong></li>
+<li>Infos générales : Marque, modèle, année, immatriculation</li>
+<li>Compteurs : Heures de fonctionnement, kilométrage</li>
+<li>Valeur d'achat, date de mise en service</li>
+<li>Galerie photos</li>
+<li><strong>Historique maintenance</strong> : Date, type, description, coût, technicien, prochain entretien</li>
+<li>Alertes maintenance due (visibles depuis le dashboard)</li>
+</ul>
+
+<hr>
+
+<h3>4.20 Inventaire / Matériaux (<code>/admin/inventory</code>)</h3>
+
+<p><strong>Description :</strong> Gestion du stock de matériaux et consommables.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau : Référence, désignation, catégorie, unité, stock actuel, stock minimum, prix unitaire, valeur totale</li>
+<li><strong>Alertes stock bas</strong> : Ligne rouge quand stock &lt; seuil minimum</li>
+<li><strong>Mouvements de stock</strong> : Entrée (réception) / Sortie (utilisation chantier) avec projet lié et date</li>
+<li>Filtres par catégorie</li>
+</ul>
+
+<hr>
+
+<h3>4.21 Sous-traitants (<code>/admin/subcontractors</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des entreprises sous-traitantes.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau : Nom, spécialité, SIRET, contact, téléphone, montant contractuel, montant payé, solde restant</li>
+<li><strong>Suivi des paiements</strong> : Ajout de paiements partiels avec date et mode</li>
+<li>Statut de paiement : En cours / Soldé / En retard</li>
+<li>Notes par sous-traitant</li>
+</ul>
+
+<hr>
+
+<h3>4.22 HSE — Hygiène, Sécurité, Environnement (<code>/admin/hse</code>)</h3>
+
+<p><strong>Description :</strong> Module de suivi des incidents, accidents et situations dangereuses sur les chantiers.</p>
+
+<p><strong>Liste des événements :</strong></p>
+<ul>
+<li>Titre, type, gravité, chantier, date, statut (Ouvert / Fermé)</li>
+<li><strong>Types</strong> : Accident du travail / Incident / Presqu'accident / Observation sécurité / Non-conformité</li>
+<li><strong>Gravités</strong> : Critique / Élevée / Moyenne / Faible</li>
+</ul>
+
+<p><strong>Fiche HSE détaillée :</strong></p>
+<ul>
+<li>Description complète de l'événement</li>
+<li>Personnes impliquées</li>
+<li>Mesures correctives prises</li>
+<li>Photos de l'incident (upload multiple)</li>
+<li>Date de clôture et actions de suivi</li>
+<li>Archivage des événements résolus</li>
+</ul>
+
+<hr>
+
+<h3>4.23 Documents RH (<code>/admin/documents</code>)</h3>
+
+<p><strong>Description :</strong> Bibliothèque centralisée des documents des employés.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau/Cartes : Nom du document, type, employé concerné, date d'upload, date d'expiration</li>
+<li><strong>Types</strong> : Contrat / Diplôme / Certification / Pièce d'identité / Visite médicale / Autre</li>
+<li>Alertes documents expirés ou proches de l'expiration</li>
+<li>Upload de fichiers (PDF, images)</li>
+<li>Filtres par employé, type, statut d'expiration</li>
+<li>Téléchargement direct</li>
+</ul>
+
+<hr>
+
+<h3>4.24 Rapports de Chantier (<code>/admin/site-reports</code>)</h3>
+
+<p><strong>Description :</strong> Journal quotidien des rapports d'avancement sur les chantiers.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Liste des rapports : Date, chantier, auteur, météo, nb de travailleurs</li>
+<li><strong>Contenu du rapport</strong> :</li>
+<li>Activités réalisées dans la journée</li>
+<li>Main d'œuvre présente (nombre)</li>
+<li>Météo (Ensoleillé / Nuageux / Pluie / Tempête)</li>
+<li>Matériaux utilisés</li>
+<li>Problèmes rencontrés / Observations</li>
+<li>Photos de chantier (galerie upload)</li>
+<li>Filtres par projet et par date</li>
+</ul>
+
+<hr>
+
+<h3>4.25 Rappels & Échéances (<code>/admin/reminders</code>)</h3>
+
+<p><strong>Description :</strong> Gestionnaire de rappels manuels et alertes automatiques.</p>
+
+<p><strong>Onglet Rappels manuels :</strong></p>
+<ul>
+<li>Titre, description, date d'échéance, priorité (Haute/Normale/Basse), statut</li>
+<li>Marquer comme fait ✅</li>
+<li>Rappels en retard mis en évidence</li>
+</ul>
+
+<p><strong>Onglet Alertes automatiques :</strong></p>
+<ul>
+<li>Générées automatiquement par le système :</li>
+<li>Factures en retard de paiement</li>
+<li>Contrats employés arrivant à échéance</li>
+<li>Équipements nécessitant une maintenance</li>
+<li>Documents expirés</li>
+<li>Stocks en dessous du seuil</li>
+<li><strong>Snooze</strong> : Reporter une alerte de N jours</li>
+<li>Visible aussi dans le widget dashboard</li>
+</ul>
+
+<hr>
+
+<h3>4.26 Journal d'Activité (<code>/admin/activity-log</code>)</h3>
+
+<p><strong>Description :</strong> Traçabilité de toutes les actions effectuées dans le système.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Tableau horodaté : Date/heure, action, module concerné, utilisateur, description détaillée</li>
+<li>Filtres : Par module (Finance, RH, Projets…), par période, par utilisateur</li>
+<li>Recherche textuelle</li>
+<li>Suppression du journal (bouton "Vider le journal" avec confirmation)</li>
+<li>Pagination</li>
+</ul>
+
+<hr>
+
+<h3>4.27 Calendrier (<code>/admin/calendar</code>)</h3>
+
+<p><strong>Description :</strong> Vue calendrier unifiée de tous les événements de l'entreprise.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Vue mensuelle / hebdomadaire</li>
+<li>Événements affichés : Échéances factures, congés approuvés, maintenances planifiées, rappels, dates de fin de projet</li>
+<li>Code couleur par type d'événement</li>
+<li>Navigation mois par mois</li>
+</ul>
+
+<hr>
+
+<h3>4.28 Rapports & Analyses (<code>/admin/reports</code>)</h3>
+
+<p><strong>Description :</strong> Tableau de bord analytique pour la direction.</p>
+
+<p><strong>Rapports disponibles :</strong></p>
+<ul>
+<li><strong>Financier</strong> : CA mensuel, évolution, répartition par type de prestation</li>
+<li><strong>Projets</strong> : Taux d'avancement, délais, budgets</li>
+<li><strong>RH</strong> : Taux de présence, absentéisme, heures travaillées</li>
+<li><strong>Commercial</strong> : Top clients, devis convertis, taux de conversion</li>
+<li>Graphiques Recharts (barres, aires, camembert)</li>
+<li>Filtres par période</li>
+</ul>
+
+<hr>
+
+<h3>4.29 Gestion des Utilisateurs Admin (<code>/admin/users</code>)</h3>
+
+<p><strong>Description :</strong> Gestion des comptes ayant accès au panneau d'administration.</p>
+
+<p><strong>Fonctionnalités :</strong></p>
+<ul>
+<li>Liste des utilisateurs avec nom, email, rôle, statut (Actif/Inactif)</li>
+<li><strong>Rôles</strong> : Super Admin / Admin / RH / Comptable / Lecteur</li>
+<li>Création de nouveaux comptes admin</li>
+<li>Modification email, mot de passe, rôle</li>
+<li>Activation / désactivation d'un compte</li>
+<li>L'utilisateur connecté ne peut pas se supprimer lui-même</li>
+</ul>
+
+<hr>
+
+<h3>4.30 Paramètres de l'Entreprise (<code>/admin/settings</code>)</h3>
+
+<p><strong>Description :</strong> Configuration globale de l'application.</p>
+
+<p><strong>Sections :</strong></p>
+<ul>
+<li><strong>Identité entreprise</strong> : Nom, adresse, téléphone, email, site web, RC, SIRET/ICE</li>
+<li><strong>Logo</strong> : Upload du logo de l'entreprise (utilisé sur les PDFs)</li>
+<li><strong>Finance</strong> : Taux de TVA par défaut (ex: 20%), devise, format de numérotation des factures</li>
+<li><strong>Email</strong> : Configuration SMTP (hôte, port, utilisateur, mot de passe) pour les envois automatiques</li>
+<li><strong>Notifications</strong> : Préférences des alertes automatiques</li>
+</ul>
+
+<hr>
+
+<h3>4.31 Gestion du Contenu du Site</h3>
+
+<p><strong>Blog</strong> (<code>/admin/blog</code>) :</p>
+<ul>
+<li>CRUD complet des articles</li>
+<li>Titre, contenu, catégorie, image de couverture, auteur, date de publication</li>
+<li>Statuts : Brouillon / Publié</li>
+</ul>
+
+<p><strong>Services</strong> (<code>/admin/services</code>) :</p>
+<ul>
+<li>CRUD des services proposés</li>
+<li>Nom, description, icône (sélecteur), ordre d'affichage, statut</li>
+</ul>
+
+<p><strong>Équipe</strong> (<code>/admin/team</code>) :</p>
+<ul>
+<li>CRUD des membres de l'équipe</li>
+<li>Nom, poste, département, photo, réseaux sociaux, ordre d'affichage</li>
+</ul>
+
+<p><strong>Témoignages</strong> (<code>/admin/testimonials</code>) :</p>
+<ul>
+<li>CRUD des avis clients</li>
+<li>Nom, entreprise, texte, note (1-5 étoiles), photo</li>
+</ul>
+
+<hr>
+
+<h3>4.32 Contacts entrants & Devis reçus</h3>
+
+<p><strong>Messages</strong> (<code>/admin/contacts</code>) :</p>
+<ul>
+<li>Tableau des messages reçus via le formulaire contact du site</li>
+<li>Nom, email, sujet, message complet, date</li>
+<li>Statuts : Nouveau / Lu / Répondu / Archivé</li>
+<li>Changement de statut en un clic</li>
+</ul>
+
+<p><strong>Devis reçus</strong> (<code>/admin/quotes</code>) :</p>
+<ul>
+<li>Tableau des demandes de devis soumises via le site</li>
+<li>Toutes les infos du prospect (nom, email, téléphone, type projet, budget, délai)</li>
+<li>Statuts : Nouveau / En cours / Converti en facture / Refusé</li>
+<li><strong>Conversion en facture</strong> : Bouton qui crée automatiquement une facture pré-remplie depuis le devis</li>
+</ul>
+
+<hr>
+
+<h2>5. FONCTIONNALITÉS TRANSVERSALES</h2>
+
+<h3>Mode Sombre / Clair</h3>
+<ul>
+<li>Toggle dans la barre latérale admin</li>
+<li>Mémorisation du choix en localStorage</li>
+<li>Toutes les pages (admin + client) supportent le dark mode</li>
+<li>Palette : Fond <code>slate-900</code> / <code>navy-900</code>, textes blancs, accents bleu</li>
+</ul>
+
+<h3>100% Responsive — Mobile First</h3>
+<ul>
+<li>Sidebar admin : Menu burger sur mobile → panneau latéral glissant avec overlay</li>
+<li>Tous les tableaux : Défilement horizontal (<code>overflow-x-auto</code>) sur petit écran</li>
+<li>En-têtes de page : Titre + boutons s'adaptent en colonne sur mobile</li>
+<li>Grilles de statistiques : 1 colonne mobile → 3 colonnes desktop</li>
+<li>Modals : Padding adapté mobile</li>
+</ul>
+
+<h3>Génération PDF</h3>
+<ul>
+<li>Disponible sur : Factures, Avoirs, Bons de commande, Bulletins de paie</li>
+<li>Librairie : <code>jsPDF</code> + <code>jspdf-autotable</code></li>
+<li>Contenu : Logo entreprise, coordonnées, tableau des lignes, totaux, mentions légales</li>
+<li>Qualité professionnelle, prêt à l'envoi</li>
+</ul>
+
+<h3>Export CSV</h3>
+<ul>
+<li>Disponible sur : Factures, Paie, Présences</li>
+<li>Librairie interne <code>exportCsv.js</code></li>
+<li>Un clic → téléchargement immédiat du fichier</li>
+</ul>
+
+<h3>Envoi d'emails</h3>
+<ul>
+<li>Factures → Client par email</li>
+<li>Bulletins de paie → Employé par email</li>
+<li>Bons de commande → Fournisseur par email</li>
+<li>Relances automatiques des factures en retard</li>
+<li>Backend : NodeMailer configuré via les paramètres admin</li>
+</ul>
+
+<h3>QR Codes employés</h3>
+<ul>
+<li>Chaque employé a un QR code unique généré (<code>qrcode.react</code>)</li>
+<li>Utilisé pour le pointage au kiosque et dans l'espace employé</li>
+<li>Téléchargeable depuis la fiche employé</li>
+</ul>
+
+<h3>Recherche globale</h3>
+<ul>
+<li>Barre de recherche dans le header admin</li>
+<li>Recherche simultanée dans : projets, clients, employés, factures, fournisseurs</li>
+</ul>
+
+<h3>Notifications internes</h3>
+<ul>
+<li>Cloche dans le header admin</li>
+<li>Affiche les derniers événements importants (nouveau message, facture en retard, etc.)</li>
+</ul>
+
+<hr>
+
+<h2>6. SCRIPT DE TOURNAGE VIDÉO</h2>
+
+<h3>Durée recommandée : 8 à 12 minutes</h3>
+
+<hr>
+
+<h4>🎬 INTRO (0:00 – 0:30)</h4>
+<blockquote><em>Musique dynamique, montage rapide de captures d'écran ou screencast</em></blockquote>
+
+<p><strong>À dire / afficher :</strong></p>
+<p>"Voici CONSTRUCTPRO — une plateforme de gestion complète pour les entreprises du secteur BTP, développée avec React, Node.js et MongoDB."</p>
+
+<p><strong>Shots recommandés :</strong></p>
+<ul>
+<li>Page d'accueil du site public (hero slider en action)</li>
+<li>Dashboard admin avec les widgets</li>
+<li>Vue mobile côte à côte avec desktop</li>
+</ul>
+
+<hr>
+
+<h4>🌐 PARTIE 1 — SITE PUBLIC (0:30 – 2:30)</h4>
+
+<p><strong>Ordre des captures :</strong></p>
+<ol>
+<li><strong>Accueil</strong> — Montrer le slider qui défile automatiquement, scroller pour montrer les sections (services, projets, compteurs animés, témoignages)</li>
+<li><strong>Services</strong> — Grille de services, survol des cartes</li>
+<li><strong>Projets</strong> — Portfolio avec filtres (cliquer sur une catégorie)</li>
+<li><strong>Contact</strong> — Remplir rapidement le formulaire</li>
+<li><strong>Demande de devis</strong> — Montrer le formulaire enrichi</li>
+<li><strong>Responsive</strong> — Réduire le navigateur à taille mobile, rescroller l'accueil</li>
+</ol>
+
+<hr>
+
+<h4>👷 PARTIE 2 — ESPACE EMPLOYÉ & KIOSQUE (2:30 – 3:30)</h4>
+
+<ol>
+<li><strong>Espace Employé</strong> — Taper un nom dans la recherche, sélectionner un employé, montrer les 4 onglets (présences, planning, congés, paie)</li>
+<li><strong>Kiosque</strong> — Afficher l'écran de kiosque, activer la caméra, montrer l'interface d'attente de scan</li>
+</ol>
+
+<hr>
+
+<h4>🔐 PARTIE 3 — CONNEXION ADMIN (3:30 – 3:50)</h4>
+<ul>
+<li>Page de login, saisir les identifiants, animation de connexion, arrivée sur le dashboard</li>
+</ul>
+
+<hr>
+
+<h4>📊 PARTIE 4 — DASHBOARD (3:50 – 5:00)</h4>
+<ol>
+<li>Montrer les 4 KPIs du haut</li>
+<li>Scroller pour montrer plusieurs widgets</li>
+<li>Cliquer sur le bouton "Personnaliser" — montrer les toggles pour activer/désactiver</li>
+<li>Glisser-déposer un widget (drag & drop)</li>
+<li>Montrer le graphique revenus vs dépenses</li>
+</ol>
+
+<hr>
+
+<h4>💼 PARTIE 5 — MODULES MÉTIER (5:00 – 9:00)</h4>
+
+<p><strong>Finance (1 min) :</strong></p>
+<ul>
+<li>Ouvrir Factures, montrer le tableau avec les statuts colorés</li>
+<li>Cliquer "Nouvelle facture", montrer le formulaire avec les lignes auto-calculées</li>
+<li>Cliquer "Télécharger PDF" (montrer le PDF généré)</li>
+</ul>
+
+<p><strong>Clients & Projets (45s) :</strong></p>
+<ul>
+<li>Ouvrir la liste clients, cliquer sur un client → fiche avec toutes ses factures</li>
+<li>Ouvrir Projets, montrer les cartes avec barres de progression</li>
+</ul>
+
+<p><strong>RH — Employés (1 min) :</strong></p>
+<ul>
+<li>Liste avec cartes colorées par département</li>
+<li>Ouvrir une fiche employé → montrer les onglets (QR code, présences, formations, avances)</li>
+</ul>
+
+<p><strong>Paie & Congés (30s) :</strong></p>
+<ul>
+<li>Paie : bouton "Générer la paie de mai 2026", tableau des bulletins</li>
+<li>Congés : tableau avec boutons Approuver/Refuser</li>
+</ul>
+
+<p><strong>Présences & Kiosque (30s) :</strong></p>
+<ul>
+<li>Vue journalière des présences</li>
+<li>Historique kiosque</li>
+</ul>
+
+<p><strong>HSE & Sécurité (20s) :</strong></p>
+<ul>
+<li>Liste des incidents avec gravités colorées</li>
+<li>Ouvrir un incident avec photos</li>
+</ul>
+
+<p><strong>Équipements (20s) :</strong></p>
+<ul>
+<li>Cartes équipements, montrer l'historique de maintenance</li>
+</ul>
+
+<hr>
+
+<h4>⚙️ PARTIE 6 — PARAMÈTRES & CONTENU (9:00 – 10:00)</h4>
+
+<ul>
+<li><strong>Paramètres</strong> : Formulaire infos entreprise + config email</li>
+<li><strong>Gestion contenu</strong> : Blog (éditeur article), équipe (upload photo), témoignages</li>
+<li><strong>Utilisateurs admin</strong> : Liste des comptes avec rôles</li>
+</ul>
+
+<hr>
+
+<h4>📱 PARTIE 7 — RESPONSIVE MOBILE (10:00 – 10:30)</h4>
+
+<ul>
+<li>DevTools Chrome → basculer en vue mobile (375px iPhone)</li>
+<li>Montrer le dashboard admin sur mobile avec le burger menu</li>
+<li>Montrer un tableau avec scroll horizontal</li>
+<li>Revenir sur le site public en mobile</li>
+</ul>
+
+<hr>
+
+<h4>🎯 CONCLUSION (10:30 – 11:00)</h4>
+
+<p><strong>À dire :</strong></p>
+<p>"Une solution 100% opérationnelle, déployée sur Netlify + Render, avec MongoDB Atlas. Gestion financière, RH, chantiers, sécurité — tout est centralisé en un seul outil."</p>
+
+<p><strong>Shot final :</strong> Split screen desktop / mobile côte à côte sur le dashboard.</p>
+
+<hr>
+
+<p><em>Document généré le 26/05/2026 — CONSTRUCTPRO BTP Management Platform</em></p>
+
+</div>
+
+</body>
+</html>

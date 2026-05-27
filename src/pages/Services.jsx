@@ -6,7 +6,8 @@ import { ArrowRight, CheckCircle,
   GitBranch, ClipboardList, Construction, Home as HomeIcon } from 'lucide-react'
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
-import { services } from '../data/services'
+import useFetch from '../hooks/useFetch'
+import { servicesApi } from '../api'
 
 const iconMap = { Building2, Layers, Hammer, PenTool, Construction, Zap, Droplets, GitBranch, Home: HomeIcon, ClipboardList }
 
@@ -18,6 +19,8 @@ const processSteps = [
 ]
 
 export default function Services() {
+  const { data: services } = useFetch(() => servicesApi.getAll(), [])
+
   return (
     <div>
       <SEO
@@ -43,7 +46,7 @@ export default function Services() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-14">
-            {services.map((s, i) => {
+            {(services || []).map((s, i) => {
               const Icon = iconMap[s.icon] || Building2
               return (
                 <motion.div

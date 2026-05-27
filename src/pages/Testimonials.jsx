@@ -5,38 +5,8 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
 import SEO from '../components/ui/SEO'
-import { testimonials } from '../data/testimonials'
-
-const extendedTestimonials = [
-  ...testimonials,
-  {
-    id: 6,
-    name: 'Karim El Fassi',
-    role: 'Directeur Technique, Banque Al Maghrib',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80',
-    rating: 5,
-    text: 'L\'agrandissement de notre siège social a été mené avec une discrétion et une efficacité remarquables. Zéro perturbation de nos opérations bancaires durant tout le chantier. Bravo CONSTRUCTPRO.',
-    project: 'Extension Siège Social — Rabat',
-  },
-  {
-    id: 7,
-    name: 'Sophie Lemaire',
-    role: 'Directrice Générale, Lycée Français de Casablanca',
-    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=200&q=80',
-    rating: 5,
-    text: 'La construction de notre nouveau bâtiment pédagogique a été livrée juste avant la rentrée scolaire. L\'équipe a respecté chaque contrainte académique. Nos élèves sont ravis de leurs nouveaux espaces.',
-    project: 'Nouveau bâtiment pédagogique — Casablanca',
-  },
-  {
-    id: 8,
-    name: 'Mohamed Tazi',
-    role: 'PDG, Tazi Holding',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80',
-    rating: 5,
-    text: 'CONSTRUCTPRO gère l\'ensemble de notre patrimoine immobilier depuis 8 ans. Leur approche globale, de la conception à la livraison, nous permet de nous concentrer sur notre cœur de métier en toute sérénité.',
-    project: 'Portefeuille immobilier — Multi-sites',
-  },
-]
+import useFetch from '../hooks/useFetch'
+import { testimonialsApi } from '../api'
 
 const stats = [
   { n: '98%', l: 'Taux de satisfaction client' },
@@ -52,6 +22,8 @@ const clients = [
 
 export default function Testimonials() {
   const [activeFilter, setActiveFilter] = useState('Tous')
+  const { data } = useFetch(() => testimonialsApi.getAll(), [])
+  const extendedTestimonials = data || []
 
   const categories = ['Tous', 'Immobilier', 'Industrie', 'Public', 'Hôtellerie']
 

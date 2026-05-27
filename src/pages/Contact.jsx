@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, Clock, MessageCircle, Send, CheckCircle, ChevronDo
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
 import SEO from '../components/ui/SEO'
+import { contactApi } from '../api'
 
 const faqs = [
   { q: 'Quel est votre délai de réponse pour un devis ?', a: 'Sous 24 heures ouvrées. Pour les projets urgents, contactez-nous directement par téléphone.' },
@@ -35,10 +36,15 @@ export default function Contact() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm()
   const [sent, setSent] = useState(false)
 
-  const onSubmit = async () => {
-    await new Promise(r => setTimeout(r, 1500))
-    setSent(true); reset()
-    setTimeout(() => setSent(false), 5000)
+  const onSubmit = async (data) => {
+    try {
+      await contactApi.send(data)
+      setSent(true)
+      reset()
+      setTimeout(() => setSent(false), 6000)
+    } catch (err) {
+      alert('Erreur lors de l\'envoi. Veuillez réessayer.')
+    }
   }
 
   return (

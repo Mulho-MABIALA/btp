@@ -1,0 +1,3 @@
+◇ injected env (4) from server\.env // tip: ⌘ override existing { override: true }
+🚀 Serveur BTP sur http://localhost:5000
+✅ MongoDB connecté

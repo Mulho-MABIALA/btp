@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { CheckCircle, Send, Upload, User, Mail, Phone, Building2, DollarSign, Calendar, FileText, Tag } from 'lucide-react'
 import PageHero from '../components/ui/PageHero'
 import SEO from '../components/ui/SEO'
+import { quotesApi } from '../api'
 
 const workTypes = [
   'Construction neuve', 'Rénovation / Réhabilitation', 'Génie civil',
@@ -67,9 +68,23 @@ export default function Quote() {
     if (valid) setStep(s => s + 1)
   }
 
-  const onSubmit = async () => {
-    await new Promise(r => setTimeout(r, 1800))
-    setSubmitted(true)
+  const onSubmit = async (data) => {
+    try {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        company: data.company,
+        serviceType: data.workType,
+        budget: data.budget,
+        location: data.location,
+        description: data.description,
+      }
+      await quotesApi.send(payload)
+      setSubmitted(true)
+    } catch (err) {
+      alert('Erreur lors de l\'envoi. Veuillez réessayer.')
+    }
   }
 
   if (submitted) {

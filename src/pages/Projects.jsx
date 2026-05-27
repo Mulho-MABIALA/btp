@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, MapPin, Clock, DollarSign, Calendar, Tag, ArrowUpRight } from 'lucide-react'
+import { X, MapPin, Clock, DollarSign, Calendar, Tag, ArrowUpRight, Loader2 } from 'lucide-react'
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
 import SEO from '../components/ui/SEO'
-import { projects, categories } from '../data/projects'
+import useFetch from '../hooks/useFetch'
+import { projectsApi } from '../api'
 
 function ProjectModal({ project, onClose }) {
   if (!project) return null
@@ -80,7 +81,8 @@ export default function Projects() {
   const [active, setActive] = useState('Tous')
   const [selected, setSelected] = useState(null)
 
-  const filtered = active === 'Tous' ? projects : projects.filter(p => p.category === active)
+  const { data: projects, loading } = useFetch(() => projectsApi.getAll(active), [active])
+  const { data: categories } = useFetch(() => projectsApi.getCategories(), [])
 
   return (
     <div>
@@ -103,7 +105,7 @@ export default function Projects() {
 
           {/* Filter */}
           <div className="flex flex-wrap justify-center gap-2 mt-10 mb-12">
-            {categories.map(cat => (
+            {(categories || ['Tous']).map(cat => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
@@ -119,9 +121,14 @@ export default function Projects() {
           </div>
 
           {/* Grid */}
+          {loading && (
+            <div className="flex justify-center py-20">
+              <Loader2 size={32} className="animate-spin text-blue-500" />
+            </div>
+          )}
           <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <AnimatePresence mode="popLayout">
-              {filtered.map((p, i) => (
+              {(projects || []).map((p, i) => (
                 <motion.div
                   key={p.id}
                   layout

@@ -3,9 +3,12 @@ import { Linkedin, Twitter, Mail } from 'lucide-react'
 import PageHero from '../components/ui/PageHero'
 import SectionTitle from '../components/ui/SectionTitle'
 import SEO from '../components/ui/SEO'
-import { team } from '../data/team'
+import useFetch from '../hooks/useFetch'
+import { teamApi } from '../api'
 
 export default function Team() {
+  const { data: team } = useFetch(() => teamApi.getAll(), [])
+
   return (
     <div>
       <SEO
@@ -31,7 +34,7 @@ export default function Team() {
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
-            {team.map((member, i) => (
+            {(team || []).map((member, i) => (
               <motion.div
                 key={member.id}
                 initial={{ opacity: 0, y: 32 }}
